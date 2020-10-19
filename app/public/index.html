@@ -16,8 +16,8 @@
   <body>
     
     <div class="container-fluid">
-      <main>
-        <div class="row" id="comments">
+      <main id="comments">
+        <div class="row">
             <table class="table table-bordered table-striped table-hover" id="commentTable">
               <thead>
                 <tr>
@@ -36,12 +36,11 @@
 
         <div class="row">
           <form v-on:submit.prevent="createComment()" id="newCommentForm">
-            <h3>Create New Comment</h3>
             <div class="form-group">
-              <label for="commentText">Comment</label>
+              <label for="commentText">Enter Comment:</label>
               <input type="text" v-model="newComment.commentText" class="form-control" id="commentText">
             </div>
-            <button type="submit" class="btn btn-primary" id="submitNewComment">Create</button>
+            <button type="submit" class="btn btn-primary" id="submitNewComment">Create Comment</button>
           </form>
         </div>
       </main>

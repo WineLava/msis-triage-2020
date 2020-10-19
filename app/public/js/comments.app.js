@@ -1,10 +1,8 @@
 var app = new Vue({
   el: '#comments',
   data: {
-    commentLst:[{
-      id:'',
-      commentText: ''
-    }],
+    commentLst:[
+    ],
     newComment:{
       id:'',
       commentText:''
@@ -33,7 +31,7 @@ var app = new Vue({
       .then(function(response) {return response.json()})
       .then(json => {
         console.log("Retruned from post:", json);
-        this.commentLst.push(json[0]);
+        this.commentLst = json;
         this.newComment = this.newCommentData();
       });
       console.log('Creating (POSTing)...!');
