@@ -32,7 +32,7 @@ var app = new Vue({
       })
       .then(function(response) {return response.json()})
       .then(json => {
-        console.log(json);
+        console.log("Retruned from post:", json);
         this.commentLst.push(json[0]);
         this.newComment = this.newCommentData();
       });

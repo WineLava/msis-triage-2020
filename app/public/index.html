@@ -10,112 +10,41 @@
     <!-- my custom CSS goes here -->
     <link rel="stylesheet" href="css/styles.css">
 
-    <title>Triage — Triage App</title>
+    <title>Comments</title>
   </head>
+  
   <body>
-    <nav class="navbar navbar-expand-md">
-      <a class="navbar-brand" href="#">Triage App</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="page_two.html">Manage Patients</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Finish Visits</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
+    
     <div class="container-fluid">
-      <div class="row" id="triagePage">
-        <div id="cardPaneLeft" class="col cardPane cardPaneLeft">
-          <form method="post" v-on:submit.prevent="handleNewPtForm">
-            <h3>Create New Patient Record</h3>
-
-            <div class="form-group">
-            <label for="newPtFirstName">First Name</label>
-            <input type="text" v-model="newPtForm.firstName" class="form-control" id="newPtFirstName" placeholder="Jane">
-          </div>
-          <div class="form-group">
-            <label for="newPtLastName">Last Name</label>
-            <input type="text" v-model="newPtForm.lastName" class="form-control" id="newPtLastName" placeholder="Doe">
-          </div>
-          <div class="form-group">
-            <label for="newPtDob">DOB</label>
-            <input type="text" v-model="newPtForm.dob" class="form-control" id="newPtDob" placeholder="2020-01-02">
-          </div>
-          <div class="form-group">
-            <label for="newPtSexAtBirth">Sex at Birth</label>
-            <select class="form-control" v-model="newPtForm.sexAtBirth" id="newPtSexAtBirth">
-              <option value="M">Male</option>
-              <option value="F">Female</option>
-              <option value="O">Other/Unknown</option>
-            </select>
-          </div>
-          <button type="submit" class="btn btn-primary">Create</button>
-
-          </form>
-
-          <h3>List of all patients</h3>
-
-          <div class="patientCard" v-for="pt in ptList" v-on:click="activePt = pt">
-            <span class="lastName">{{ pt.lastName }}</span>,
-            <span clas="firstName">{{ pt.firstName }}</span>
-            <span class="birthDate float-right">{{ pt.dob }}</span>
-          </div>
-
-          <!-- <button v-on:click="yell()">Click Me!</button> -->
+      <main>
+        <div class="row" id="comments">
+            <table class="table table-bordered table-striped table-hover" id="commentTable">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Comment</th>
+                </tr>
+              </thead>
+              <tbody id="commentTableBody">
+                <tr v-for="comment in commentLst">
+                  <td>{{ comment.id }}</td>
+                  <td>{{ comment.commentText }}</td>
+                </tr>
+              </tbody>
+            </table>
         </div>
 
-        <div class="col-6">
-          <h1>New Visit</h1>
-          <form v-on:submit.prevent="handleTriageForm">
+        <div class="row">
+          <form v-on:submit.prevent="createComment()" id="newCommentForm">
+            <h3>Create New Comment</h3>
             <div class="form-group">
-              <label for="ptName">Patient Name</label>
-              <input class="form-control" id="ptName" v-bind:value="activePtName" readonly>
-
+              <label for="commentText">Comment</label>
+              <input type="text" v-model="newComment.commentText" class="form-control" id="commentText">
             </div>
-
-          <div class="form-group">
-            <label for="visitDate">Visit Date</label>
-            <input type="text" class="form-control" id="visitDate" v-model="triageForm.visitDate" placeholder="">
-          </div>
-
-          <div class="form-group">
-            <label for="visitPriority">Priority</label>
-            <select class="form-control" id="visitPriority" v-model="triageForm.priority">
-              <option value="high">Critical</option>
-              <option value="medium">Urgent</option>
-              <option value="low">Non-urgent</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="visitSymptoms">Patient Symptoms</label>
-            <textarea class="form-control" id="visitSymptoms" rows="5" v-model="triageForm.visitDescription"></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-
-        </form>
+            <button type="submit" class="btn btn-primary" id="submitNewComment">Create</button>
+          </form>
         </div>
-        <div class="col cardPane cardPaneRight">
-          <h3>Waiting patients</h3>
-          <div v-for="visit in visitList" v-bind:class="'patientCard ' + priorityClass(visit.priority)" v-bind:data-patient_guid="visit.patientGuid" :data-visit_id="visit.visitId">
-            (<span class="lastName">{{ visit.sexAtBirth }}</span>
-            <span class="lastName">{{ age(visit.dob) }}</span>)
-            <span class="lastName">{{ visit.lastName }}</span>,
-            <span clas="firstName">{{ visit.firstName }}</span><br />
-            <span class="text-right">Arrived {{ dateSince(visit.visitDateUtc) }}</span>
-          </div>
-
-        </div>
-      </div>
+      </main>
     </div>
     <!-- END content -->
 
@@ -130,6 +59,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="js/index.app.js"></script>
+    <script src="js/comments.app.js"></script>
+    
   </body>
 </html>

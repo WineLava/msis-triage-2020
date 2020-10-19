@@ -17,7 +17,7 @@ $stmt = $db->prepare(
 );
 
 $stmt->execute([
-  $_POST['commentText'],
+  $_POST['commentText']
 ]);
 
 // If needed, get auto-generated PK from DB
@@ -27,4 +27,4 @@ $stmt->execute([
 // Here, instead of giving output, I'm redirecting to the SELECT API,
 // just in case the data changed by entering it
 header('HTTP/1.1 303 See Other');
-header('Location: ../comments/?id=' . $_POST['id']);
+header('Location: ../comments/');
